@@ -6675,12 +6675,19 @@ html.tiny-pc-beauty-v12 #uiverse-starfield #stars3 {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff9ed2, #ffd166, #9df0ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #fff;
+}
+.seller-modal-title .title-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.seller-modal-title .title-text {
+  background: linear-gradient(90deg, #ff9ed2, #ffd166, #9df0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .seller-close-btn {
   background: rgba(255, 255, 255, 0.08);
@@ -11324,7 +11331,7 @@ if(window.TINY_PERF && !window.TINY_PERF.mobile){
   <div class="seller-modal-overlay" id="seller-modal-overlay"></div>
   <div class="seller-modal-box">
     <div class="seller-modal-header">
-      <h3 class="seller-modal-title">💌 Tùy biến thiệp 20/10 gửi khách</h3>
+      <h3 class="seller-modal-title"><span class="title-icon">💌</span><span class="title-text">Tùy biến thiệp 20/10</span></h3>
       <button type="button" class="seller-close-btn" id="seller-modal-close" aria-label="Đóng">✕</button>
     </div>
 
@@ -11359,12 +11366,12 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
         <span>👁️ Xem trước</span>
       </button>
       <button type="button" class="seller-action-btn btn-copy-link" id="seller-btn-copy">
-        <span>📋 Sao chép link gửi khách</span>
+        <span>📋 Sao chép link</span>
       </button>
     </div>
 
     <div class="seller-link-output-box">
-      <span class="seller-link-output-label">🔗 Đường link thiệp của khách (tự động cập nhật):</span>
+      <span class="seller-link-output-label">🔗 Đường link thiệp (tự động cập nhật):</span>
       <input type="text" id="seller-link-output" class="seller-link-output" readonly>
     </div>
   </div>
@@ -11372,7 +11379,7 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
 
 <div id="seller-toast" class="seller-toast">
   <span>✓</span>
-  <span id="seller-toast-msg">Đã sao chép link thành công! Bạn có thể gửi cho khách ngay.</span>
+  <span id="seller-toast-msg">Đã sao chép link thành công! 📋</span>
 </div>
 
 
@@ -11564,14 +11571,14 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
       const link = generateLink();
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(link).then(() => {
-          showToast('Đã sao chép link gửi khách thành công! 📋');
+          showToast('Đã sao chép link thành công! 📋');
         }).catch(() => {
           if (outputLink) { outputLink.select(); document.execCommand('copy'); }
-          showToast('Đã sao chép link gửi khách thành công! 📋');
+          showToast('Đã sao chép link thành công! 📋');
         });
       } else {
         if (outputLink) { outputLink.select(); document.execCommand('copy'); }
-        showToast('Đã sao chép link gửi khách thành công! 📋');
+        showToast('Đã sao chép link thành công! 📋');
       }
     });
   }
