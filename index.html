@@ -11387,13 +11387,17 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
 (function() {
   'use strict';
 
+  function getStandardLetter(toName, fromName) {
+    return 'Nhân ngày Phụ nữ Việt Nam 20/10, Tiny và ' + fromName + ' muốn gửi đến ' + toName + ' những điều ngọt ngào và tốt đẹp nhất.\n\nCảm ơn ' + toName + ' vì đã luôn mỉm cười, luôn tỏa sáng và mang lại niềm vui cho những người xung quanh. Dù cuộc sống có đôi lúc bận rộn hay mỏi mệt, ' + toName + ' hãy luôn nhớ yêu thương và trân trọng chính mình nhé.\n\nChúc ' + toName + ' một ngày 20/10 ngập tràn niềm vui, nhận được thật nhiều hoa, quà và những lời chúc yêu thương chân thành. Chúc cho nụ cười trên môi ' + toName + ' sẽ mãi luôn rạng rỡ và hạnh phúc!';
+  }
+
   // 1. Cấu hình mặc định
   window.CARD_CONFIG = {
     to: 'em',
     from: 'Dr Huy',
     wish: 'thật xinh đẹp, rạng rỡ và hạnh phúc nhé!',
-    title: 'Món quà 20/10 đặc biệt dành riêng cho em 🌸',
-    letter: 'Nhân ngày Phụ nữ Việt Nam 20/10, tớ và Tiny muốn gửi đến bạn những điều ngọt ngào và tốt đẹp nhất.\n\nCảm ơn bạn vì đã luôn mỉm cười, luôn tỏa sáng và mang lại niềm vui cho những người xung quanh. Dù cuộc sống có đôi lúc bận rộn hay mỏi mệt, bạn hãy luôn nhớ yêu thương và trân trọng chính mình nhé.\n\nChúc bạn một ngày 20/10 ngập tràn niềm vui, nhận được thật nhiều hoa, quà và những lời chúc yêu thương chân thành. Chúc cho nụ cười trên môi bạn sẽ mãi luôn rạng rỡ và hạnh phúc!'
+    title: 'Món quà 20/10 đặc biệt dành riêng cho bạn 🌸',
+    letter: getStandardLetter('em', 'Dr Huy')
   };
 
   // 2. Đọc tham số URL
@@ -11414,19 +11418,69 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
   }
   if (paramLetter) {
     window.CARD_CONFIG.letter = paramLetter.replace(/\\n/g, '\n').trim();
+  } else if (paramTo || paramFrom) {
+    window.CARD_CONFIG.letter = getStandardLetter(window.CARD_CONFIG.to, window.CARD_CONFIG.from);
   }
 
-  // 3. Hàm áp dụng cấu hình vào DOM
+  // 3. Hàm áp dụng cấu hình vào TOÀN BỘ CÂU CHUYỆN VÀ DOM
   function applyCardConfig() {
     const to = window.CARD_CONFIG.to || 'em';
     const from = window.CARD_CONFIG.from || 'Dr Huy';
     const wish = window.CARD_CONFIG.wish || 'thật xinh đẹp, rạng rỡ và hạnh phúc nhé!';
 
-    // text-3 (Người gửi)
+    // Mở đầu: "này [cậu/em] gì ơi" hoặc "này [Lan] ơi"
+    const elText1 = document.getElementById('text-1');
+    if (elText1) {
+      if (to === 'cậu' || to === 'em' || to === 'bạn' || to === 'chị' || to === 'anh') {
+        elText1.textContent = 'này ' + to + ' gì ơi';
+      } else {
+        elText1.textContent = 'này ' + to + ' ơi';
+      }
+    }
+
+    // text-3: Người gửi
     const senderDisplay = document.getElementById('sender-name-display');
     if (senderDisplay) senderDisplay.textContent = from;
 
-    // reality-message (Người nhận & Lời chúc)
+    // text-4: "ui [to] đẹp quá"
+    const elText4 = document.getElementById('text-4');
+    if (elText4) elText4.textContent = 'ui ' + to + ' đẹp quá';
+
+    // text-7: "chúc [to] thật nhiều sức khỏe"
+    const elText7 = document.getElementById('text-7');
+    if (elText7) elText7.textContent = 'chúc ' + to + ' thật nhiều sức khỏe';
+
+    // text-8: "chúc [to] thật xinh đẹp"
+    const elText8 = document.getElementById('text-8');
+    if (elText8) elText8.textContent = 'chúc ' + to + ' thật xinh đẹp';
+
+    // text-9: "và chúc [to] luôn giữ nụ cười trên môi"
+    const elText9 = document.getElementById('text-9');
+    if (elText9) elText9.innerHTML = 'và chúc ' + to + ' luôn giữ<br>nụ cười trên môi';
+
+    // text-10: "tớ tặng [to] ngọn cỏ 4 lá này"
+    const elText10 = document.getElementById('text-10');
+    if (elText10) elText10.innerHTML = 'tớ tặng ' + to + ' ngọn <span class="clover-word">cỏ 4 lá</span> này';
+
+    // text-12: "chúc [to] gặp được thật nhiều điều may mắn"
+    const elText12 = document.getElementById('text-12');
+    if (elText12) elText12.innerHTML = 'chúc ' + to + ' gặp được thật nhiều điều <span class="luck-green-words">may mắn</span>';
+
+    // text-13: "liệu [to] có thể?"
+    const elText13 = document.getElementById('text-13');
+    if (elText13) elText13.innerHTML = 'liệu ' + to + ' <span class="question-blue-words">có thể?</span>';
+
+    // Cảnh máy bay cất cánh
+    const elShareOrig = document.querySelector('.share-heading-original');
+    if (elShareOrig) {
+      elShareOrig.innerHTML = 'đến khi ta gặp lại ' + to + '<br><span class="share-soft">hãy cười thật nhiều thật xinh đẹp và hạnh phúc nhé</span>';
+    }
+    const elShareThanks = document.querySelector('.share-heading-thanks');
+    if (elShareThanks) {
+      elShareThanks.textContent = 'cảm ơn ' + to + ' nhiều';
+    }
+
+    // Cảnh kết thúc thực tại (reality-message)
     const recipientDisplay = document.getElementById('recipient-name-display');
     if (recipientDisplay) recipientDisplay.textContent = to;
 
@@ -11439,9 +11493,6 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
 
     const letterSalutation = document.getElementById('letter-salutation-display');
     if (letterSalutation) letterSalutation.textContent = 'Gửi ' + to + ', một bông hoa rạng rỡ nhất! 🌸';
-
-    const letterSign = document.getElementById('letter-sender-sign');
-    if (letterSign) letterSign.textContent = 'Tiny & ' + from + ' ♡';
 
     const letterSignP = document.getElementById('letter-sign-display');
     if (letterSignP) {
@@ -11481,6 +11532,11 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
   const btnCopy = document.getElementById('seller-btn-copy');
   const toast = document.getElementById('seller-toast');
 
+  let letterIsCustom = false;
+  if (inputLetter) {
+    inputLetter.addEventListener('input', () => { letterIsCustom = true; });
+  }
+
   // Nếu người nhận đang mở link đã có ?to=... và không có ?edit=1, chuyển sang chế độ stealth (chỉ 1 icon nhỏ góc kín đáo)
   if (paramTo && !paramEdit && sellerBtn) {
     sellerBtn.classList.add('is-stealth');
@@ -11502,10 +11558,10 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
 
     const base = window.location.origin + window.location.pathname;
     const params = new URLSearchParams();
-    if (toVal && toVal !== 'em') params.set('to', toVal);
-    if (fromVal && fromVal !== 'Dr Huy') params.set('from', fromVal);
+    if (toVal) params.set('to', toVal);
+    if (fromVal) params.set('from', fromVal);
     if (wishVal && wishVal !== 'thật xinh đẹp, rạng rỡ và hạnh phúc nhé!') params.set('wish', wishVal);
-    if (letterVal && letterVal !== window.CARD_CONFIG.letter) params.set('letter', letterVal);
+    if (letterVal && letterVal !== getStandardLetter(toVal || 'em', fromVal || 'Dr Huy')) params.set('letter', letterVal);
 
     const qs = params.toString();
     const finalUrl = qs ? base + '?' + qs : base;
@@ -11515,9 +11571,30 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
 
   generateLink();
 
-  [inputTo, inputFrom, inputWish, inputLetter].forEach(inp => {
-    if (inp) inp.addEventListener('input', generateLink);
-  });
+  if (inputTo) {
+    inputTo.addEventListener('input', () => {
+      if (!letterIsCustom && inputLetter) {
+        const curTo = inputTo.value.trim() || 'em';
+        const curFrom = inputFrom ? inputFrom.value.trim() || 'Dr Huy' : 'Dr Huy';
+        inputLetter.value = getStandardLetter(curTo, curFrom).replace(/\\n/g, '\n');
+      }
+      generateLink();
+    });
+  }
+
+  if (inputFrom) {
+    inputFrom.addEventListener('input', () => {
+      if (!letterIsCustom && inputLetter) {
+        const curTo = inputTo ? inputTo.value.trim() || 'em' : 'em';
+        const curFrom = inputFrom.value.trim() || 'Dr Huy';
+        inputLetter.value = getStandardLetter(curTo, curFrom).replace(/\\n/g, '\n');
+      }
+      generateLink();
+    });
+  }
+
+  if (inputWish) inputWish.addEventListener('input', generateLink);
+  if (inputLetter) inputLetter.addEventListener('input', generateLink);
 
   function openSellerModal(e) {
     if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -11544,20 +11621,22 @@ Chúc em một ngày 20/10 ngập tràn niềm vui, nhận được thật nhi�
     sellerOverlay.addEventListener('click', closeSellerModal);
   }
 
-  // Xem trước
+  // Xem trước: cập nhật và áp dụng tức thì
   if (btnPreview) {
     btnPreview.addEventListener('click', () => {
       window.CARD_CONFIG.to = inputTo ? inputTo.value.trim() || 'em' : 'em';
       window.CARD_CONFIG.from = inputFrom ? inputFrom.value.trim() || 'Dr Huy' : 'Dr Huy';
       window.CARD_CONFIG.wish = inputWish ? inputWish.value.trim() || 'thật xinh đẹp, rạng rỡ và hạnh phúc nhé!' : 'thật xinh đẹp, rạng rỡ và hạnh phúc nhé!';
-      if (inputLetter && inputLetter.value.trim()) window.CARD_CONFIG.letter = inputLetter.value.trim();
+      if (inputLetter && inputLetter.value.trim()) {
+        window.CARD_CONFIG.letter = inputLetter.value.trim();
+      }
       applyCardConfig();
       closeSellerModal();
       showToast('Đã áp dụng xem trước thành công!');
     });
   }
 
-  // Sao chép link gửi khách
+  // Sao chép link
   function showToast(msg) {
     if (!toast) return;
     const msgEl = document.getElementById('seller-toast-msg');
